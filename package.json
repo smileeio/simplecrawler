@@ -1,7 +1,7 @@
 {
   "name": "@smileeio/simplecrawler",
   "description": "Very straightforward, event driven web crawler. Features a flexible queue interface and a basic cache mechanism with extensible backend.",
-  "version": "1.1.9-smileeio.1",
+  "version": "1.1.9-smileeio.2",
   "homepage": "https://github.com/simplecrawler/simplecrawler",
   "author": "Christopher Giffard <christopher.giffard@cgiffard.com>",
   "maintainers": [
@@ -38,7 +38,7 @@
   "dependencies": {
     "async": "^3.1.0",
     "iconv-lite": "^0.5.0",
-    "robots-parser": "^2.1.1",
+    "robots-parser": "^3.0.1",
     "urijs": "^1.19.1"
   },
   "devDependencies": {
