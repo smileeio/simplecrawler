@@ -41,7 +41,7 @@
     "robots-parser": "^3.0.1",
     "urijs": "^1.19.1",
     "isobj": "^1.0.0",
-    "nanoid": "^5.1.6"
+    "nanoid": "^3.3.10"
   },
   "devDependencies": {
     "chai": "^4.2.0",
