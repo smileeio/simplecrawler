@@ -19,7 +19,7 @@ function find(array, callback) {
 
 function deepAssign(object, source) {
     for (var key in source) {
-        if (source.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
             if (typeof object[key] === "object" && typeof source[key] === "object") {
                 deepAssign(object[key], source[key]);
             } else {
@@ -52,7 +52,7 @@ describe("Queue methods", function() {
                 if (index < length) {
                     crawler.queue.get(index, function(error, item) {
                         for (var key in queue[index]) {
-                            if (queue[index].hasOwnProperty(key)) {
+                            if (Object.prototype.hasOwnProperty.call(queue[index], key)) {
                                 item[key] = queue[index][key];
                             }
                         }

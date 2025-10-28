@@ -9,21 +9,19 @@ var chai = require("chai");
 chai.should();
 
 var cookies = [
-    "Set-Cookie: RMID=007f010019155170d6ca005f; Expires=Sat, 19 Apr 2020 05:31:54 GMT; Path=/; Domain=.nytimes.com;",
+    "Set-Cookie: RMID=007f010019155170d6ca005f; Expires=Sat, 19 Apr 2030 05:31:54 GMT; Path=/; Domain=.nytimes.com;",
     "Set-cookie: adxcs=-; path=/; domain=.nytimes.com",
-    "Set-Cookie: PREF=ID=8c63f2522e22574d:FF=0:TM=1366349569:LM=1366349569:S=p1Urbmfwfs-R573P; expires=Sun, 19-Apr-2020 05:32:49 GMT; path=/; domain=.google.com",
-    "Set-Cookie: NID=67=DhLO04YPAMlhETrTIe2oFPqWZfypQXLZfCIPItOvf70zhtUEMEItYfdVh6aROEzRHqtd9jHT6HJ7Oo93eqP3cjYNp8GgShfa6r0WVbsmQQRUvutbjBOPwzo7ybwYcWdB; expires=Sat, 19-Oct-2020 05:32:49 GMT; path=/; domain=.google.com; HttpOnly",
-    "Set-Cookie: fpc=d=Yq1z8hbA9WextmPFlb7suMTfMRgtSc2FyzAB7now1ExfUZ.eW7s4QSwSKlB6ZB0juN8OLZxWf_XXEIcspYaQmVVD0mD0xJ.xpXBCSw5Dl_Ql6n.RLoM.7CnTbNSsiSr2fkNiCN47tRUB4j8iWevNwQdFDn1hB8z8t1xwWt76n.sLIRY9p2_jTBhukfSD4SBpBkJhI1o-&v=2; expires=Sat, 19-Apr-2020 05:48:42 GMT; path=/; domain=www.yahoo.com",
-    "Set-Cookie: test=test; path=/test; domain=test.com"
+    "Set-Cookie: PREF=ID=8c63f2522e22574d:FF=0:TM=1366349569:LM=1366349569:S=p1Urbmfwfs-R573P; expires=Sun, 19-Apr-2030 05:32:49 GMT; path=/; domain=.google.com",
+    "Set-Cookie: NID=67=DhLO04YPAMlhETrTIe2oFPqWZfypQXLZfCIPItOvf70zhtUEMEItYfdVh6aROEzRHqtd9jHT6HJ7Oo93eqP3cjYNp8GgShfa6r0WVbsmQQRUvutbjBOPwzo7ybwYcWdB; expires=Sat, 19-Oct-2030 05:32:49 GMT; path=/; domain=.google.com; HttpOnly",
+    "Set-Cookie: fpc=d=Yq1z8hbA9WextmPFlb7suMTfMRgtSc2FyzAB7now1ExfUZ.eW7s4QSwSKlB6ZB0juN8OLZxWf_XXEIcspYaQmVVD0mD0xJ.xpXBCSw5Dl_Ql6n.RLoM.7CnTbNSsiSr2fkNiCN47tRUB4j8iWevNwQdFDn1hB8z8t1xwWt76n.sLIRY9p2_jTBhukfSD4SBpBkJhI1o-&v=2; expires=Sat, 19-Apr-2030 05:48:42 GMT; path=/; domain=www.yahoo.com",
+    "Set-Cookie: test=test; path=/test; domain=test.com",
 ];
 
-describe("Cookies", function() {
-
+describe("Cookies", function () {
     var CookieJar = require("../lib/cookies.js");
     var Cookie = CookieJar.Cookie;
 
-    it("should be able parse from string properly", function() {
-
+    it("should be able parse from string properly", function () {
         Cookie.should.be.a("function");
         Cookie.fromString.should.be.a("function");
         Cookie.fromString(cookies[0]).should.be.an("object");
@@ -33,7 +31,7 @@ describe("Cookies", function() {
 
         tmpCookie.name.should.equal("RMID");
         tmpCookie.value.should.equal("007f010019155170d6ca005f");
-        tmpCookie.expires.should.equal(1587274314000);
+        tmpCookie.expires.should.equal(1902807114000);
         tmpCookie.path.should.equal("/");
         tmpCookie.domain.should.equal(".nytimes.com");
 
@@ -45,11 +43,9 @@ describe("Cookies", function() {
         tmpCookie.expires.should.equal(-1);
         tmpCookie.path.should.equal("/");
         tmpCookie.domain.should.equal(".nytimes.com");
-
     });
 
-    it("should be able to test for expiry", function() {
-
+    it("should be able to test for expiry", function () {
         // Create a new cookie that should already have expired...
         var tmpCookie = new Cookie("test", "test", Date.now() - 1000);
 
@@ -61,9 +57,8 @@ describe("Cookies", function() {
         tmpCookie.isExpired().should.equal(false);
     });
 
-    it("should be able to output the cookie object as a string", function() {
-
-        cookies.forEach(function(cookie) {
+    it("should be able to output the cookie object as a string", function () {
+        cookies.forEach(function (cookie) {
             var tmpCookie = Cookie.fromString(cookie),
                 outputString = tmpCookie.toString(true),
                 reParsedCookie = Cookie.fromString(outputString);
@@ -77,16 +72,15 @@ describe("Cookies", function() {
         });
     });
 
-    describe("Cookie Jar", function() {
-
-        it("should be able to be instantiated", function() {
-            var cookieJar = new CookieJar();    // eslint-disable-line
+    describe("Cookie Jar", function () {
+        it("should be able to be instantiated", function () {
+            var cookieJar = new CookieJar(); // eslint-disable-line
         });
 
-        it("should be able to add cookies", function() {
+        it("should be able to add cookies", function () {
             var cookieJar = new CookieJar();
 
-            cookies.forEach(function(cookie) {
+            cookies.forEach(function (cookie) {
                 var parsedCookie = Cookie.fromString(cookie);
 
                 cookieJar.add(
@@ -95,7 +89,8 @@ describe("Cookies", function() {
                     parsedCookie.expires,
                     parsedCookie.path,
                     parsedCookie.domain,
-                    parsedCookie.httponly);
+                    parsedCookie.httponly
+                );
 
                 var cookiesAdded = cookieJar.get(parsedCookie.name),
                     parsedCookie2 = cookiesAdded.pop();
@@ -111,10 +106,10 @@ describe("Cookies", function() {
             cookieJar.cookies.length.should.equal(cookies.length);
         });
 
-        it("should be able to remove cookies by name", function() {
+        it("should be able to remove cookies by name", function () {
             var cookieJar = new CookieJar();
 
-            cookies.forEach(function(cookie) {
+            cookies.forEach(function (cookie) {
                 var parsedCookie = Cookie.fromString(cookie);
 
                 cookieJar.add(
@@ -123,24 +118,27 @@ describe("Cookies", function() {
                     parsedCookie.expires,
                     parsedCookie.path,
                     parsedCookie.domain,
-                    parsedCookie.httponly);
+                    parsedCookie.httponly
+                );
             });
 
             cookieJar.cookies.length.should.equal(cookies.length);
 
-            cookies.forEach(function(cookie, index) {
+            cookies.forEach(function (cookie, index) {
                 var parsedCookie = Cookie.fromString(cookie);
 
                 cookieJar.remove(parsedCookie.name);
 
-                cookieJar.cookies.length.should.equal(cookies.length - (index + 1));
+                cookieJar.cookies.length.should.equal(
+                    cookies.length - (index + 1)
+                );
             });
         });
 
-        it("should be able to retrieve cookies by name", function() {
+        it("should be able to retrieve cookies by name", function () {
             var cookieJar = new CookieJar();
 
-            cookies.forEach(function(cookie) {
+            cookies.forEach(function (cookie) {
                 var parsedCookie = Cookie.fromString(cookie);
 
                 cookieJar.add(
@@ -149,7 +147,8 @@ describe("Cookies", function() {
                     parsedCookie.expires,
                     parsedCookie.path,
                     parsedCookie.domain,
-                    parsedCookie.httponly);
+                    parsedCookie.httponly
+                );
 
                 var returnedCookies = cookieJar.get(parsedCookie.name),
                     parsedCookie2 = returnedCookies.pop();
@@ -163,11 +162,11 @@ describe("Cookies", function() {
             });
         });
 
-        it("should be able to accept cookies from a header/s", function() {
+        it("should be able to accept cookies from a header/s", function () {
             var cookieJar = new CookieJar();
             cookieJar.addFromHeaders(cookies);
 
-            cookies.forEach(function(cookie) {
+            cookies.forEach(function (cookie) {
                 var parsedCookie = Cookie.fromString(cookie),
                     returnedCookies = cookieJar.get(parsedCookie.name),
                     parsedCookie2 = returnedCookies.slice(0, 1).pop();
@@ -182,15 +181,16 @@ describe("Cookies", function() {
             });
         });
 
-        it("should be able to generate a header from internal storage", function() {
+        it("should be able to generate a header from internal storage", function () {
             var cookieJar = new CookieJar();
+
             cookieJar.addFromHeaders(cookies);
             var comparisonHeaderList = cookieJar.getAsHeader();
 
             comparisonHeaderList.should.be.an("array");
             comparisonHeaderList.length.should.equal(cookies.length);
 
-            comparisonHeaderList.forEach(function(header, index) {
+            comparisonHeaderList.forEach(function (header, index) {
                 var parsedCookie = Cookie.fromString(cookies[index]);
                 var parsedCookie2 = Cookie.fromString(header);
 
@@ -199,7 +199,7 @@ describe("Cookies", function() {
             });
         });
 
-        it("should be able to filter generated headers by domain and path", function() {
+        it("should be able to filter generated headers by domain and path", function () {
             var cookieJar = new CookieJar();
             cookieJar.addFromHeaders(cookies);
             var comparisonHeaderList = cookieJar.getAsHeader("nytimes.com");
@@ -212,7 +212,7 @@ describe("Cookies", function() {
             comparisonHeaderList.length.should.equal(5);
         });
 
-        it("should be able to filter generated headers by expiry", function() {
+        it("should be able to filter generated headers by expiry", function () {
             var cookieJar = new CookieJar();
             cookieJar.addFromHeaders(cookies);
 
